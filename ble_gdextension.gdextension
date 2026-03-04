@@ -1,0 +1,13 @@
+[configuration]
+entry_symbol = "ble_gdextension"                ; matches your register_types.cpp
+compatibility_minimum = "4.4"                   ; or "4.4" — check your Godot version
+reloadable = true
+
+[libraries]
+linux.debug.editor.x86_64     = "res://addons/ble_gdextension/bin/libble_gdextension.linux.editor.x86_64.so"
+linux.debug.template.x86_64   = "res://addons/ble_gdextension/bin/libble_gdextension.linux.template_debug.x86_64.so"
+linux.release.template.x86_64 = "res://addons/ble_gdextension/bin/libble_gdextension.linux.template_release.x86_64.so"
+
+linux.debug.editor.arm64     = "res://addons/ble_gdextension/bin/libble_gdextension.linux.editor.arm64.so"
+linux.debug.template.arm64   = "res://addons/ble_gdextension/bin/libble_gdextension.linux.template_debug.arm64.so"
+linux.release.template.arm64 = "res://addons/ble_gdextension/bin/libble_gdextension.linux.template_release.arm64.so"

@@ -1,0 +1,72 @@
+#!/usr/bin/env python
+import os
+import sys
+
+# Import godot-cpp environment
+env = SConscript("godot-cpp/SConstruct")
+
+# ──────────────────────────────────────────────
+#   Project-specific configuration
+# ──────────────────────────────────────────────
+
+# Where to find your own source files
+env.Append(CPPPATH=["src/"])
+
+# Enable C++ exceptions (usually needed)
+env.Append(CXXFLAGS=["-fexceptions"])
+
+# ── Bluetooth / sdbus-c++ dependencies ───────────────
+# Adjust paths according to your system!
+env.Append(
+    CPPPATH=["/usr/include/sdbus-c++"],
+    LIBPATH=["/usr/lib", "/usr/lib64", "/usr/local/lib"],
+    LIBS=["sdbus-c++"]
+)
+
+# If you're using pkg-config (recommended & cleaner)
+# env.ParseConfig("pkg-config --cflags --libs sdbus-c++")
+
+# You can also add more compile/link flags if needed
+# env.Append(CPPDEFINES=["DEBUG_BLE=1"])           # example
+# env.Append(CXXFLAGS=["-Wall", "-Wextra"])
+
+# ──────────────────────────────────────────────
+#   Source files
+# ──────────────────────────────────────────────
+sources = Glob("src/*.cpp")
+
+# ──────────────────────────────────────────────
+#   Output library name & path
+# ──────────────────────────────────────────────
+
+# We want something like:
+# bin/libble_gdextension.linux.editor.x86_64.so
+#     or libble_gdextension.linux.template_debug.x86_64.so etc.
+
+lib_name_base = "ble_gdextension"
+
+if env["platform"] == "macos":
+    library = env.SharedLibrary(
+        f"bin/lib{lib_name_base}.{env['platform']}.{env['target']}.framework/lib{lib_name_base}.{env['platform']}.{env['target']}",
+        source=sources,
+    )
+elif env["platform"] == "ios":
+    if env["ios_simulator"]:
+        library = env.StaticLibrary(
+            f"bin/lib{lib_name_base}.{env['platform']}.{env['target']}.simulator.a",
+            source=sources,
+        )
+    else:
+        library = env.StaticLibrary(
+            f"bin/lib{lib_name_base}.{env['platform']}.{env['target']}.a",
+            source=sources,
+        )
+else:
+    # Linux / Windows / Android — most common case
+    suffix = env["suffix"]  # usually .editor / .template_debug / .template_release
+    library = env.SharedLibrary(
+        f"bin/lib{lib_name_base}{suffix}{env['SHLIBSUFFIX']}",
+        source=sources,
+    )
+
+Default(library)
