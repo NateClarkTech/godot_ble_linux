@@ -36,29 +36,25 @@ func connect_accel_device_one(scan_duration: float = 5.0) -> bool:
   await get_tree().create_timer(scan_duration).timeout
 	
   for device in BLE.get_discovered_devices():
-    if device.contains("EF:08:68:1C:85:9E"):
-      print(BLE.connect_device("EF:08:68:1C:85:9E"))
+    if device.contains("EF:09:18:1D:05:9R"):
+      print(BLE.connect_device("EF:09:18:1D:05:9R"))
       found_device = true
 
 	if found_device:
 		await get_tree().create_timer(2.0).timeout
 		
-		print(BLE.subscribe_to_characteristic("EF:08:68:1C:85:9E", "6e400003-b5a3-f393-e0a9-e50e24dcca9e", true))
+		print(BLE.subscribe_to_characteristic("EF:09:18:1D:05:9R", "6e400003-b5a3-f393-e0a9-e50e24dcca9e", true))
 		BLE.characteristic_value_updated.connect(_on_characteristic_value_updated)
 		BLE.stop_scan()
 		ble_scanner_on = false		
 	
-	self.bluetooth_device_address = "EF:08:68:1C:85:9E"
+	self.bluetooth_device_address = "EF:09:18:1D:05:9R"
 	self.set_process(true)
   return found_device
 
 func _on_characteristic_value_updated(address: String, uuid: String, value: PackedByteArray) -> void:
 	if (address == self.bluetooth_device_address and uuid == "6e400003-b5a3-f393-e0a9-e50e24dcca9e"):
-		#parse_accel_data(value)
-		var peak_w_counter: Array = parse_accel_data2(value)
-		time_since_last_signal = 0
-		if (peak_w_counter[0]):
-			call_deferred("emit_peak_detected")
+		print(value)
 ```
 
 ## Deps: 
