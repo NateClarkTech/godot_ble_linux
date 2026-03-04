@@ -51,6 +51,14 @@ func connect_accel_device_one(scan_duration: float = 5.0) -> bool:
 	self.bluetooth_device_address = "EF:08:68:1C:85:9E"
 	self.set_process(true)
   return found_device
+
+func _on_characteristic_value_updated(address: String, uuid: String, value: PackedByteArray) -> void:
+	if (address == self.bluetooth_device_address and uuid == "6e400003-b5a3-f393-e0a9-e50e24dcca9e"):
+		#parse_accel_data(value)
+		var peak_w_counter: Array = parse_accel_data2(value)
+		time_since_last_signal = 0
+		if (peak_w_counter[0]):
+			call_deferred("emit_peak_detected")
 ```
 
 ## Deps: 
