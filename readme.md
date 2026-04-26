@@ -77,7 +77,7 @@ Pick and choose what you need and when.
 ## In event of issues:
 
 Most likely pain point is the latest godot-cpp tools. You need to specficically build against
-version 4.5 since we are till on there. 
+version 4.5 since we are still on there. 
 
 ###  Check current godot-cpp version
 
