@@ -59,7 +59,7 @@ func _on_characteristic_value_updated(address: String, uuid: String, value: Pack
 
 ## Deps: 
 Ensure you have both `sdbus` and `scons` installed. 
-A better solution will come down the line maybe something like openBLE. 
+A better solution will come down the line maybe something like SimpleBLE. 
 For now we build for linux and bind to sdbus. Scons is for godot extension build system. 
 
 ## Build command:
