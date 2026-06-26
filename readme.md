@@ -1,3 +1,7 @@
+# This bluetooth GDExtension is not being maintained anymore, please consider the following projects based on needs:
+- [BluetoothGD](https://github.com/NateClarkTech/BluetoothGD) for Bluetooth connecting and Bluetooth Classic
+- [BLEGD](https://github.com/Fantety/GDBLE) for Bluetooth Low Energy devices
+
 # Linux Bluetooth Extension for Godot  
 A gdextension that adds some basic Bluetooth API for the godot engine. Useful for games that may need to communicate with custom hardware. This addon is likely incomplete in terms of functionality and needs improvemnet and should improved before being production ready, but good enough for testing.  
 Currently functionality is limited to connecting to a device and reading or subscribing to a given bluetooth characteristic's value.  
